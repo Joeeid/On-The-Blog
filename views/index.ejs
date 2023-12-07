@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>On The Blog</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+		/>
+		<link rel="stylesheet" href="/styles/main.css" />
+	</head>
+	<body>
+		<%- include("partials/header.ejs") %> <% if (!locals.blogs || blogs.length
+		== 0) { %>
+		<div
+			class="d-flex align-items-center justify-content-center px-4 py-5 text-center bg-transparent"
+			style="min-height: 60vh"
+		>
+			<div>
+				<h1 class="display-5 fw-bold text-body-emphasis">No Blogs Yet...</h1>
+				<div class="col-lg-6 mx-auto">
+					<p class="lead mb-4">Let's create memories!</p>
+					<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+						<a
+							type="button"
+							class="btn btn-primary btn-lg px-4 gap-3"
+							href="/blog"
+						>
+							New Blog
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } else{ %>
+		<div class="container" style="min-height: 60vh">
+			<div class="row">
+				<!--Feature to be added in the future 
+                        <div class="col-12">
+                        <div class="col-lg-6 panel-body ps-2 pe-0 pe-lg-2 pt-2 pb-4">
+                            <ul class="list-table">
+                            <li style="width:70px;">
+                                <img class="img-circle img-bordered-primary" src="" alt="" width="65px" height="65px">
+                            </li>
+                            <li class="text-left">
+                                <h5 class="semibold ellipsis nm">Colt Jenkins</h5>
+                                <p class="text-muted nm">18 years old</p>
+                            </li>
+                            <li class="text-end pe-0 pe-lg-1">
+                                <button type="button" class="btn btn-success" style="width: 6rem;">Edit</button>
+                            </li>
+                            </ul>
+                        </div>
+                    </div> -->
+				<% blogs.forEach( (blog, index) => { %>
+				<div class="col-lg-6 bootstrap snippets bootdeys">
+					<div class="widget panel">
+						<ul class="list-group">
+							<li class="list-group-item" style="min-height: 12rem">
+								<h4>Blog <%= index+1 %></h4>
+								<p class="nm position-relative">
+									<%- blog.replace(/\n/g, '<br />') %>
+								</p>
+								<div
+									class="d-flex align-items-center position-absolute bottom-0"
+								>
+									<small class="text-muted">1 day ago</small>
+									<form action="/updateBlog" method="post">
+										<input
+											type="hidden"
+											name="blogIndex"
+											value="<%= index %>"
+										/>
+										<button
+											type="submit"
+											class="icon-link icon-link-hover text-info btn ms-3"
+											style="
+												--bs-icon-link-transform: translate3d(0, -0.125rem, 0);
+											"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="16"
+												height="16"
+												fill="currentColor"
+												class="bi bi-pencil-square"
+												aria-hidden="true"
+												viewBox="0 0 16 16"
+											>
+												<path
+													d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+												/>
+												<path
+													fill-rule="evenodd"
+													d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+												/>
+											</svg>
+										</button>
+									</form>
+									<form action="/deleteBlog" method="post">
+										<input
+											type="hidden"
+											name="blogIndex"
+											value="<%= index %>"
+										/>
+										<button
+											type="submit"
+											class="icon-link icon-link-hover text-danger btn ps-1"
+											style="
+												--bs-icon-link-transform: translate3d(0, -0.125rem, 0);
+											"
+										>
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												width="16"
+												height="16"
+												fill="currentColor"
+												class="bi bi-trash3-fill"
+												aria-hidden="true"
+												viewBox="0 0 16 16"
+											>
+												<path
+													d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"
+												/>
+											</svg>
+										</button>
+									</form>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<% }); %>
+			</div>
+		</div>
+		<% } %> <%- include("partials/footer.ejs") %>
+	</body>
+</html>

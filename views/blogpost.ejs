@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>On The Blog</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/styles/main.css" />
+	</head>
+	<body>
+		<%- include("partials/header.ejs") %>
+		<div class="container" style="min-height: 60vh;">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<h2>What's on your mind?</h2>
+					<form action="/saveBlog" method="POST">
+                        <input type="hidden" name="blogIndex" id="blogIndex" value="<%= locals.blogIndex ? blogIndex : "" %>">
+						<div class="form-group">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="description" class="lead">Enter Description:</label>
+                                </div>
+							    <div class="col-6">
+                                    <p class="lead text-end fw-medium"><%= locals.blogIndex ? "Edit Blog " + ++blogIndex : "New Blog" %></p>
+                                </div>
+                            </div>
+                            <div class="bg-white bg-opacity-25">
+                                <textarea
+                                    rows="8"
+                                    class="form-control bg-transparent"
+                                    style="resize: none;"
+                                    name="description"
+                                    id="description"
+                                ><%= locals.blogDesc ? blogDesc : "" %></textarea>
+                            </div>
+						</div>
+						<div class="form-group mt-3">
+							<button type="submit" class="btn btn-primary">
+                                <%= locals.blogIndex ? "Update" : "Create" %>
+                            </button>
+							<a class="btn btn-secondary" href="/">Cancel</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<%- include("partials/footer.ejs") %>
+	</body>
+</html>
